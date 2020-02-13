@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: k8sphotoappapigateway
+data:
+  application.properties: |-
+    spring.application.name=k8sphotoappapigateway
+    app.users.registrationurlpath=/api/userservice/users
+    app.users.loginurlpath=/api/userservice/users/login
+    app.users.actuatorurlpath=/api/userservice/actuator/*
+    app.users.h2consoleurlpath=/api/userservice/h2-console/**
+    app.albums.actuatorurlpath=/api/albumservice/actuator/*
+    app.albums.h2consoleurlpath=/api/albumservice/h2-console/**
+    app.gateway.authorizationtokenheadername=Authorization
+    app.gateway.actuatorurlpath=/actuator/*
+    app.gateway.tokensecret=hfgry463hf746hf573ydh475fhy
+    app.gateway.authorizationtokenheaderprefix=Bearer
+    management.endpoints.web.exposure.include=*
+    zuul.prefix=/api
+    zuul.ignoredServices=*
+    zuul.routes.userservice.path=/userservice/**
+    zuul.routes.userservice.url=k8sphotoappapiusers
+    zuul.routes.userservice.stripPrefix=true
+    zuul.routes.albumservice.path=/albumservice/**
+    zuul.routes.albumservice.url=k8sphotoappapialbums
+    zuul.routes.albumservice.stripPrefix=true
+    spring.cloud.kubernetes.enabled=false
